@@ -1,33 +1,40 @@
 import React from 'react';
 import { StatusBar, Animated, FlatList, Text, Image, View, StyleSheet, Dimensions } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 const {width, height} = Dimensions.get('screen');
 
-const bgs = ['#A5BBFF', '#DDBEFE', '#FF63ED', '#B98EFF'];
+// import example from './Images/alert.png'
+// const exampleUri = Image.resolveAssetSource(example).uri
+
+const image01 = require('./Images/alert.png')
+const image02 = require('./Images/energy.png')
+const image03 = require('./Images/soft-drink.png')
+const image04 = require('./Images/cookies.png')
+
+const bgs = ['#F57A08', '#FF9BFF', '#ED2061', '#D77D41'];
 const DATA = [
   {
     "key": "3571572",
     "title": "Multi-lateral intermediate moratorium",
     "description": "I'll back up the multi-byte XSS matrix, that should feed the SCSI application!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571572.png"
+    "image": image01
   },
   {
     "key": "3571747",
     "title": "Automated radical data-warehouse",
     "description": "Use the optical SAS system, then you can navigate the auxiliary alarm!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571747.png"
+    "image": image02
   },
   {
     "key": "3571680",
     "title": "Inverse attitude-oriented system engine",
     "description": "The ADP array is down, compress the online sensor so we can input the HTTP panel!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571680.png"
+    "image": image03
   },
   {
     "key": "3571603",
     "title": "Monitored global data-warehouse",
     "description": "We need to program the open-source IB interface!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571603.png"
+    "image": image04
   }
 ]
 
@@ -85,6 +92,28 @@ const Backdrop = ({scrollX}) => {
 }
 
 const Square = ({scrollX}) => {
+
+  const YOLO = Animated.modulo(
+    Animated.divide(
+      Animated.modulo(scrollX, width),
+      new Animated.Value(width)
+  ), 1)
+
+  const rotate = YOLO.interpolate({
+    inputRange: [0, .5, 1],
+    outputRange: ['35deg', '0deg', '35deg']
+  })
+
+  const translateX = YOLO.interpolate({
+    inputRange: [0, .5, 1],
+    outputRange: [0, -height, 0]
+  })
+
+  const translateY = YOLO.interpolate({
+    inputRange: [0, .5, 1],
+    outputRange: [0, -height, 0]
+  })
+
   return (
     <Animated.View 
       style={{
@@ -95,9 +124,17 @@ const Square = ({scrollX}) => {
         position: 'absolute',
         top: -height * 0.65,
         left: -height * 0.35,
-        transform: [{
-          rotate: '35deg'
-        }]
+        transform: [
+          {
+            rotate
+          },
+          {
+            translateX
+          },
+          {
+            translateY
+          }
+        ]
       }}
     />
   )
@@ -123,11 +160,12 @@ export default function App() {
           showsHorizontalScrollIndicator={false}
           pagingEnabled
           renderItem={({item}) => {
+            console.log(require('./Images/alert.png'))
             return (
               <View style={{width, padding: 20 ,alignItems: 'center'}}>
                 <View style={{flex: .7, justifyContent: 'center'}}>
                   <Image 
-                    source={{uri: item.image}}
+                    source={ item.image }
                     style={{
                       width: width / 2,
                       height: height / 2,
