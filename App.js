@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, Animated, FlatList, Text, Image, View, StyleSheet, Dimensions } from 'react-native';
+import { StatusBar, Animated, Text, Image, View, StyleSheet, Dimensions } from 'react-native';
 const {width, height} = Dimensions.get('screen');
 
 // import example from './Images/alert.png'
@@ -10,7 +10,7 @@ const image02 = require('./Images/energy.png')
 const image03 = require('./Images/soft-drink.png')
 const image04 = require('./Images/cookies.png')
 
-const bgs = ['#F57A08', '#FF9BFF', '#ED2061', '#D77D41'];
+const bgs = ['#F57A08', '#FF9BFF', '#ED2061', '#F79E60'];
 const DATA = [
   {
     "key": "3571572",
@@ -44,11 +44,13 @@ const Indicator = ({scrollX}) => {
      <View style={{position: 'absolute', bottom: 40, flexDirection: 'row'}}>
        {DATA.map((_, i) => {
          const inputRange = [(i - 1) * width, i * width, (i + 1) * width]
+         
          const scale = scrollX.interpolate({
            inputRange,
            outputRange: [0.8, 1.4, 0.8],
            extrapolate: 'clamp',
          })
+
          const opacity = scrollX.interpolate({
            inputRange,
            outputRange: [0.6, 0.9, 0.6],
@@ -63,11 +65,7 @@ const Indicator = ({scrollX}) => {
               backgroundColor: '#fff',
               opacity,
               margin: 10,
-              transform: [
-                {
-                  scale
-                }
-              ]
+              transform: [{ scale }]
             }} />
        })}
      </View>
@@ -79,13 +77,12 @@ const Backdrop = ({scrollX}) => {
     inputRange: bgs.map((_, i) => i * width),
     outputRange: bgs.map((bg) => bg)
   })
+
   return (
     <Animated.View 
       style={[
         StyleSheet.absoluteFillObject,
-        {
-          backgroundColor
-        }
+        { backgroundColor }
       ]}
     />
   )
@@ -125,15 +122,9 @@ const Square = ({scrollX}) => {
         top: -height * 0.65,
         left: -height * 0.35,
         transform: [
-          {
-            rotate
-          },
-          {
-            translateX
-          },
-          {
-            translateY
-          }
+          { rotate },
+          { translateX },
+          { translateY }
         ]
       }}
     />
@@ -142,6 +133,7 @@ const Square = ({scrollX}) => {
 
 export default function App() {
   const scrollX = React.useRef(new Animated.Value(0)).current
+  
   return (
     <View style={styles.container}>
       <StatusBar hidden />
@@ -174,7 +166,13 @@ export default function App() {
                   />
                 </View>
                 <View style={{flex: .3}}>
-                    <Text style={{ color: '#fff', fontWeight: '800', fontSize: 24, marginBottom: 10, marginTop: 10}}>
+                    <Text style={{ 
+                        color: '#fff', 
+                        fontWeight: '800', 
+                        fontSize: 24, 
+                        marginBottom: 10, 
+                        marginTop: 10
+                    }}>
                       {item.title}
                     </Text>
                     <Text style={{ color: '#fff', fontWeight: '300'}}>
