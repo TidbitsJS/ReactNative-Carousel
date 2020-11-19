@@ -98,7 +98,7 @@ const Square = ({scrollX}) => {
 
   const rotate = YOLO.interpolate({
     inputRange: [0, .5, 1],
-    outputRange: ['35deg', '0deg', '35deg']
+    outputRange: ['35deg', '10deg', '35deg']
   })
 
   const translateX = YOLO.interpolate({
@@ -117,10 +117,10 @@ const Square = ({scrollX}) => {
         width: height, 
         height: height,
         backgroundColor: '#fff',
-        borderRadius: 86,
+        borderRadius: 170,
         position: 'absolute',
-        top: -height * 0.65,
-        left: -height * 0.35,
+        top: -height * 0.63,
+        left: -height * 0.33,
         transform: [
           { rotate },
           { translateX },
@@ -143,25 +143,25 @@ export default function App() {
           data={DATA}
           keyExtractor={item => item.key}
           horizontal
-          scrollEventThrottle={32}
+          scrollEventThrottle={12}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX} }}],
             {useNativeDriver: false}
           )}
-          contentContainerStyle={{paddingBottom: 100}}
+          contentContainerStyle={{paddingBottom: 120}}
           showsHorizontalScrollIndicator={false}
           pagingEnabled
           renderItem={({item}) => {
             console.log(require('./Images/alert.png'))
             return (
               <View style={{width, padding: 20 ,alignItems: 'center'}}>
-                <View style={{flex: .7, justifyContent: 'center'}}>
+                <View style={{flex: .7, justifyContent: 'center', alignItems: 'center'}}>
                   <Image 
                     source={ item.image }
                     style={{
                       width: width / 2,
                       height: height / 2,
-                      resizeMode: 'contain'
+                      resizeMode: 'contain',
                     }}
                   />
                 </View>
@@ -171,7 +171,6 @@ export default function App() {
                         fontWeight: '800', 
                         fontSize: 24, 
                         marginBottom: 10, 
-                        marginTop: 10
                     }}>
                       {item.title}
                     </Text>
